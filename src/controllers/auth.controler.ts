@@ -20,13 +20,35 @@ export const postregister = async(req:Request, res:Response) => {
         res.status(201).json({mensaje:"usuario Agregado con Exito"})
 
     } catch (error) {
-        res.status(400).json({mensaje:"error"})
+        res.status(500).json({mensaje:"error"})
     }
 }
 
-export const postLogin = (req:Request, res:Response) => {
+export const postLogin = async(req:Request, res:Response) => {
 
-    res.json({mensaje:"hola"})
+    try {
+        const {email,password} = req.body
+        const user = await User.findOneBy({email})
+        if(!user){
+            res.status(401).json({mensaje:"email o contraseña incorrecta"})
+            return
+        }else{
+            //comprobando la contrasena
+            const isPasswordCorrect =  bcrypt.compareSync(password,user.password)
+            if(!isPasswordCorrect){
+                res.status(401).json({mensaje:" email o contraseña incorrecta"})
+                return
+            }else{
+                res.status(200).json({mensaje:"Usuario Logueado Correctamente",id:user.id})
+            }
+        }
+
+    } catch (error) {
+        res.status(500).json({mensaje:"error" })
+        
+    }
+
+
 }
 
 
