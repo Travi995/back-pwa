@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { postLogin } from "../../controllers/auth.controler";
+import { postLogin, postregister } from "../../controllers/auth.controler";
 import { check } from "express-validator";
 import { validateFields } from "../../middlewares/validateFields";
 
@@ -12,3 +12,11 @@ routerAuth.post('/login',[
     check('password','la contraseña es obligatoria').isLength({min:8}),
     validateFields
 ] ,postLogin)
+
+
+routerAuth.post('/register',[
+    check('name','el nombre de usuario es obligatorio').notEmpty(),
+    check('email','el correo es obligatorio').isEmail(),
+    check('password','la contraseña es obligatoria  y mayor de 8 caracteres').isLength({min:8}),
+    validateFields
+] ,postregister)

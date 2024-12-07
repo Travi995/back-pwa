@@ -1,6 +1,7 @@
 import express, { Application } from "express";
 import cors from 'cors'
 import { routerAuth } from "../routes/auth/auth";
+import { db } from "../db/db";
 
 export class Server {
     public app : Application
@@ -13,6 +14,7 @@ export class Server {
         this.pathAuth = '/api/auth'
         
         this.middleaware()
+        this.loadDb()
         this.routes()
     }
 
@@ -26,6 +28,15 @@ export class Server {
 
         //servir la carpeta public
         this.app.use(express.static('public'))
+    }
+
+    async loadDb(){
+        try {
+            await db.initialize()
+            console.log("Base de datos cargada")
+        } catch (error) {
+            console.log("Error al cargar la base de datos",error)
+        }
     }
 
     routes(){
