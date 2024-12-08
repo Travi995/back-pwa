@@ -1,14 +1,6 @@
-
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { typeMoneyEnum } from "../enum/entities";
 
-export enum typeMoneyEnum {
-    USD = "USD",
-    EUR = "EUR",
-    CUP = "CUP",
-}
-
-
-//entidad para el tipo de moneda
 @Entity()
 export class TypeMoney extends BaseEntity {
     @PrimaryGeneratedColumn()

@@ -4,6 +4,7 @@ import { routerAuth } from "../routes/auth/auth";
 import { db } from "../db/db";
 import { routerTransaction } from "../routes/transaction/transaction";
 import { routerCategories } from "../routes/categories/categories";
+import { routeMoney } from "../routes/money/money";
 
 export class Server {
     public app : Application
@@ -11,6 +12,7 @@ export class Server {
     public pathAuth:string
     public pathTransaction:string
     public pathCategories:string
+    public pathMoney:string
 
     constructor(){
         this.app =  express()
@@ -18,6 +20,7 @@ export class Server {
         this.pathAuth = '/api/auth'
         this.pathTransaction = '/api/transaction'
         this.pathCategories = '/api/categories'
+        this.pathMoney = '/api/money'
         
         this.middleaware()
         this.loadDb()
@@ -49,6 +52,7 @@ export class Server {
         this.app.use(this.pathAuth,routerAuth )
         this.app.use(this.pathTransaction,routerTransaction )
         this.app.use(this.pathCategories,routerCategories )
+        this.app.use(this.pathMoney,routeMoney )
     }
 
     listen() {
