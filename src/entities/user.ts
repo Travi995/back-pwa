@@ -1,25 +1,28 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
-
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, } from "typeorm";
-
-@Entity()
-export class User extends BaseEntity {
-
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    BaseEntity,
+    OneToMany,
+  } from "typeorm";
+import { Transaction } from "./transaction";
+  
+  
+  @Entity()
+  export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
-    id:number
-
-    @Column({unique:true,})
-    @IsEmail()
-    email:string
-
+    id: number;
+  
+    @Column({ unique: true })
+    email: string;
+  
     @Column()
-    @IsString()
-    name:string
-
+    name: string;
+  
     @Column()
-    @IsNotEmpty()
-    @Length(8,255)
-    password:string
-
-    
-}
+    password: string;
+  
+    @OneToMany(() => Transaction, (transaction) => transaction.user)
+    transactions: Transaction[]; // Relación con transacciones
+  }
+  
