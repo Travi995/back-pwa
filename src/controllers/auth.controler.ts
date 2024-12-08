@@ -42,7 +42,7 @@ export const postLogin = async (req: Request, res: Response) => {
             return
         } 
 
-        const token =  await generateToken(user.id)
+        const token =   generateToken(user.id)
         res.status(200).json({ mensaje: "Usuario Logueado con exito", token })
 
 
