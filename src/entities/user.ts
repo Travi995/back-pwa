@@ -18,6 +18,9 @@ import { Transaction } from "./transaction";
   
     @Column()
     name: string;
+
+    @Column({default:0})
+    amount: number;
   
     @Column()
     password: string;

@@ -7,5 +7,13 @@ export class Category extends BaseEntity {
   id: number;
 
   @Column({ unique: true })
-  name: string; // Ejemplo: "Food", "Transport", "Health"
+  label: string; // Ejemplo: "Food", "Transport", "Health"
+
+  @Column()
+  color: string; // Ejemplo: "Comida", "Transporte", "Salud"
+
+  @Column()
+  icon: string; 
+
+  
 }

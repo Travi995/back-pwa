@@ -7,7 +7,7 @@ import {
     JoinColumn,
   } from "typeorm";
 import { User } from "./user";
-import { TypeMoney } from "./typeMoney";
+import { TypeMoney, typeMoneyEnum } from "./typeMoney";
 import { Category } from "./category";
  
   @Entity()
@@ -25,6 +25,9 @@ import { Category } from "./category";
     @JoinColumn()
     user: User; // Relación con un usuario
   
+    @Column({type:"enum",enum:["Gasto","Ingreso"]})
+    type:typeMoneyEnum ;
+
     @ManyToOne(() => TypeMoney, (currency) => currency.id)
     @JoinColumn()
     currency: TypeMoney; // Relación con un tipo de moneda

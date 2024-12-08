@@ -13,6 +13,7 @@ export const db = new DataSource({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     synchronize: true,
+    dropSchema: true,
     logging: false,
     entities: [User,Transaction,Category,TypeMoney],
 })
