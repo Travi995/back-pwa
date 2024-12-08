@@ -2,16 +2,19 @@ import express, { Application } from "express";
 import cors from 'cors'
 import { routerAuth } from "../routes/auth/auth";
 import { db } from "../db/db";
+import { routerTransaction } from "../routes/transaction/transaction";
 
 export class Server {
     public app : Application
     public port:number
     public pathAuth:string
+    public pathTransaction:string
 
     constructor(){
         this.app =  express()
         this.port = parseInt(process.env.PORT || "3000")
         this.pathAuth = '/api/auth'
+        this.pathTransaction = '/api/transaction'
         
         this.middleaware()
         this.loadDb()
@@ -41,6 +44,7 @@ export class Server {
 
     routes(){
         this.app.use(this.pathAuth,routerAuth )
+        this.app.use(this.pathTransaction,routerTransaction )
     }
 
     listen() {
