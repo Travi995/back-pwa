@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { User } from "../entities/user";
-import { TypeMoney } from "../entities/typeMoney";
 
 
 export const createMoney = async (req:any,res:any)=>{
@@ -17,22 +16,22 @@ export const createMoney = async (req:any,res:any)=>{
             return res.status(404).json({ message: "User not found" });
         }
         
-        let typeMoney = await TypeMoney.findOne({ where: { value: typeCoin } })
+        // let typeMoney = await TypeMoney.findOne({ where: { value: typeCoin } })
 
-        if (!typeMoney) {
-            typeMoney = new TypeMoney();
-            typeMoney.value = typeCoin;
-            await typeMoney.save();
-        }
+        // if (!typeMoney) {
+        //     typeMoney = new TypeMoney();
+        //     typeMoney.value = typeCoin;
+        //     await typeMoney.save();
+        // }
 
-        // Asignar la relación al usuario
-        user.type = typeMoney;
-        user.amount = value;
-        await user.save();
+        // // Asignar la relación al usuario
+        // user.type = typeMoney;
+        // user.amount = value;
+        // await user.save();
 
-        const {password,...element} =  user
+        // const {password,...element} =  user
 
-        res.json({message:'Moneda agregada',user:element})
+        // res.json({message:'Moneda agregada',user:element})
     } catch (error) {
         res.status(500).json({message:'Error al agregar la moneda',error})
     }

@@ -12,3 +12,15 @@ export const uniqueCategory = async(req:any,res:any,next:NextFunction) => {
 
     next()
 }
+
+
+export const categoryExists = async(req:any,res:any,next:NextFunction) => {
+    const {category} = req.params
+    const element =  await Category.findOneBy({id:category})
+  
+    if(!element){
+        return res.status(404).json({mensaje:"No existe una categoria con ese id"})
+    }
+  
+    next()
+  }

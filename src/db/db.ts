@@ -2,7 +2,6 @@ import { DataSource } from "typeorm";
 import { User } from "../entities/user";
 import { Transaction } from "../entities/transaction";
 import { Category } from "../entities/category";
-import { TypeMoney } from "../entities/typeMoney";
 
 
 export const db = new DataSource({
@@ -15,5 +14,5 @@ export const db = new DataSource({
     synchronize: true,
     dropSchema: false,
     logging: false,
-    entities: [User,Transaction,Category,TypeMoney],
+    entities: [User,Transaction,Category],
 })

@@ -8,29 +8,26 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Transaction } from "./transaction";
-import { TypeMoney } from "./typeMoney";
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid',)
   id: number;
 
-  @Column({ unique: true })
+  @Column('text',{unique: true,nullable:false })
   email: string;
 
-  @Column()
+  @Column('text',{nullable:true})
   name: string;
 
-  @Column({ default: 0 })
+  @Column( 'numeric',{ default: 0,nullable:true })
   amount: number;
 
-  @Column()
+  @Column('text',{select:false})
   password: string;
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[]; 
 
-  @ManyToOne(() => TypeMoney, { eager: true }) 
-  @JoinColumn({ name: "type_money_id" }) 
-  type: TypeMoney;
+ 
 }
