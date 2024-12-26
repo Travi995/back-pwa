@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
+import { ReqExtends } from "../interfaces/generic";
 
-export const validateFields = (req:any,res:any,next:NextFunction) => {
+export const validateFields = (req:Request,res:Response,next:NextFunction) => {
 
     const errors= validationResult(req)
     if(!errors.isEmpty()){
-        return res.status(400).json({errors:errors.array()})
+        res.status(400).json({errors:errors.array()})
+        return 
     }
     
     next()

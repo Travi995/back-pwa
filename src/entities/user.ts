@@ -4,14 +4,13 @@ import {
   Column,
   BaseEntity,
   OneToMany,
-  ManyToOne,
-  JoinColumn,
+ 
 } from "typeorm";
 import { Transaction } from "./transaction";
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid',)
+  @PrimaryGeneratedColumn('increment',)
   id: number;
 
   @Column('text',{unique: true,nullable:false })
