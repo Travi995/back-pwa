@@ -2,13 +2,13 @@ import { Request, Response } from "express"
 import { User } from "../entities/user"
 import { hashPass } from "../helpers/hashPass"
 import { rolsEnum } from "../enum/rols"
+import { count } from "console"
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
-        console.log(req.body.user)
         const elements = await User.find()
 
-        res.status(200).json({ mensaje: "usuarios listados", data: elements })
+        res.status(200).json({ mensaje: "Lista de Usuarios", data: elements })
     } catch (error) {
         console.log(error)
         res.status(500).json({ mensaje: "error" })
@@ -22,9 +22,10 @@ export const getUserById = async (req: Request, res: Response) => {
         const item = parseInt(id)
         if (!item) {
             res.status(400).json({ message: 'el id debe ser un numero ' })
+            return
         }
         const element = await User.findOneBy({ id: item })
-        console.log(element)
+        
         if (element) {
             res.status(200).json({ data: element })
         } else {
@@ -44,13 +45,14 @@ export const createUser = async (req: Request, res: Response) => {
     try {
         const { name, email, password } = req.body
 
-        
+        const countElements = await User.count()
+        const rolDefault =  countElements? rolsEnum.user:rolsEnum.admin
 
         const newUser = User.create({
             name,
             email,
             password: hashPass(password),
-            roleUser:rolsEnum.admin
+            roleUser:rolDefault
         });
         await newUser.save();
 
@@ -64,12 +66,15 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const patchUser = async (req: Request, res: Response) => {
+
+
+    //validacion para k el usuario de rol user no pueda modificar los datos del rol admin 
     try {
         const { id } = req.params
         const { name, amount,pass } = req.body
 
         const item = parseInt(id)
-        if (!item) {
+        if (isNaN(item)) {
             res.status(400).json({ message: 'el id debe ser un numero ' })
         }
 

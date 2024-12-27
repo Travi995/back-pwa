@@ -4,11 +4,13 @@ import { validateJWT } from "../../middlewares/validateJWT";
 import { validateFields } from "../../middlewares/validateFields";
 import { check } from "express-validator";
 import { uniqueEmail } from "../../middlewares/uniqueEmail";
+import { verifyAdmin } from "../../middlewares/verifyAdmin";
 
 export const routesUser = Router()
 
 routesUser.get('/',[
     validateJWT,
+    verifyAdmin,
     validateFields
 ],getUsers)
 
@@ -33,6 +35,7 @@ routesUser.patch('/:id',[
 
 routesUser.delete('/:id',[
     validateJWT,
+    verifyAdmin,
     validateFields
 ],deleteUser)
 
