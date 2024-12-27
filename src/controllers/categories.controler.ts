@@ -24,6 +24,7 @@ export const createCategory = async (req:Request,res:Response)=>{
 
 export const getAllCategories = async (req:Request,res:Response)=>{
     try {
+        const {} = req.body
         const elements = await Category.find()
         if(elements.length === 0){
             

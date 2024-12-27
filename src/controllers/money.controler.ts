@@ -16,7 +16,7 @@ export const createMoney = async (req:Request,res:Response)=>{
             return
         }
         
-        if(Object.values(typeMoneyEnum).includes(typeCoin)){
+        if(!Object.values(typeMoneyEnum).includes(typeCoin)){
             res.status(400).json({ message: "tipo de moneda no valida",
                                     example:"tipo de moneda validas son USD,EUR,CUP"
              });

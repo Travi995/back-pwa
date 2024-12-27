@@ -1,3 +1,4 @@
+import { typeTransaction, typeTransactionEnum } from './../enum/entities';
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -5,7 +6,6 @@ import {
     BaseEntity,
     ManyToOne,
     JoinColumn,
-    OneToMany,
   } from "typeorm";
 import { User } from "./user";
 
@@ -19,6 +19,9 @@ import { Category } from "./category";
     @Column("decimal", { precision: 10, scale: 2 }) // Monto con decimales
     amount: number;
   
+    @Column('enum',{enum:typeTransactionEnum})
+    typeTransaction:typeTransaction;
+
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     date: Date; // Fecha y hora asignada automáticamente por el servidor
 

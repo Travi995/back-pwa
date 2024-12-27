@@ -2,10 +2,11 @@ import { Request, Response } from "express"
 import { User } from "../entities/user"
 import { hashPass } from "../helpers/hashPass"
 import { rolsEnum } from "../enum/rols"
-import { count } from "console"
 
 export const getUsers = async (req: Request, res: Response) => {
+
     try {
+        const {} =  req.body
         const elements = await User.find()
 
         res.status(200).json({ mensaje: "Lista de Usuarios", data: elements })
@@ -66,7 +67,6 @@ export const createUser = async (req: Request, res: Response) => {
 }
 
 export const patchUser = async (req: Request, res: Response) => {
-
 
     //validacion para k el usuario de rol user no pueda modificar los datos del rol admin 
     try {

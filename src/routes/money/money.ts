@@ -11,7 +11,7 @@ export const routeMoney = Router()
 //agregar dinerod e la cuenta
 routeMoney.post('/',[
     validateJWT,
-    check('typeCoin','el tipo de moneda es querido ').isString(),
+    check('typeCoin','el tipo de moneda es requerido ').isString(),
     check('value','el valor de la moneda es requerido y ademas un numero').isNumeric(),
     validateTypeMoney,
     validateFields

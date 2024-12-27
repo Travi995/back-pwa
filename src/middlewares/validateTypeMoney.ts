@@ -5,6 +5,8 @@ export const validateTypeMoney = async(req:Request,res:Response,next:NextFunctio
     try {
         const {typeCoin} = req.body
         
+        console.log(typeCoin)
+       console.log( Object.values(typeMoneyEnum).includes(typeCoin))
         if(Object.values(typeMoneyEnum).includes(typeCoin)){
             next()
         }else{
@@ -12,6 +14,7 @@ export const validateTypeMoney = async(req:Request,res:Response,next:NextFunctio
         }
        
     } catch (error) {
-        return res.status(500).json({mensaje:"Error al validar el tipo de moneda"})
+        res.status(500).json({mensaje:"Error al validar el tipo de moneda"})
+        return 
     }
 }

@@ -11,8 +11,8 @@ export const routerTransaction = Router()
 routerTransaction.post('/',[
     validateJWT,
     check('amount','Amount is required').isNumeric(),
-    check('idUser','el id del Usuario es requerido').isString(),
     check('category','La categoria es requerida').isInt(),
+    check('typeTransaction','el tipo de transaccion es obligatorio').isString(),
     categoryExists,
     validateFields
 ],createTransaction)
