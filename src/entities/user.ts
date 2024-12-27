@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Transaction } from "./transaction";
 import { rolsEnum } from "../enum/rols";
+import { typeMoneyEnum } from "../enum/entities";
 
 @Entity()
 export class User extends BaseEntity {
@@ -22,6 +23,9 @@ export class User extends BaseEntity {
 
   @Column( 'numeric',{ default: 0,nullable:true })
   amount: number;
+
+  @Column('enum',{enum: typeMoneyEnum,nullable:true })
+  currency: typeMoneyEnum;
 
   @Column('text',{select:false})
   password: string;

@@ -1,38 +1,38 @@
 import { Request, Response } from "express";
 import { User } from "../entities/user";
+import { typeMoneyEnum } from "../enum/entities";
 
 
-export const createMoney = async (req:any,res:any)=>{
+export const createMoney = async (req:Request,res:Response)=>{
 
     try {
-        const { typeCoin, value, id } = req.body;
+        const {id} = req.body.user
+        const { typeCoin, value} = req.body;
         
-        const user = await User.findOne({
-            where: { id: id },
-            relations: ["type"], // Aseguramos traer el tipo de moneda actual
-        });
+        const user = await User.findOneBy(id)
 
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            res.status(404).json({ message: "no existe ese usuario" });
+            return
         }
         
-        // let typeMoney = await TypeMoney.findOne({ where: { value: typeCoin } })
+        if(Object.values(typeMoneyEnum).includes(typeCoin)){
+            res.status(400).json({ message: "tipo de moneda no valida",
+                                    example:"tipo de moneda validas son USD,EUR,CUP"
+             });
+            return
+        }
 
-        // if (!typeMoney) {
-        //     typeMoney = new TypeMoney();
-        //     typeMoney.value = typeCoin;
-        //     await typeMoney.save();
-        // }
 
-        // // Asignar la relación al usuario
-        // user.type = typeMoney;
-        // user.amount = value;
-        // await user.save();
+        const element  =  await User.update(id,{
+            currency:typeCoin,
+            amount:value
+        })
 
-        // const {password,...element} =  user
-
-        // res.json({message:'Moneda agregada',user:element})
+        res.json({message:'Moneda agregada',user:element})
+        
     } catch (error) {
+        console.log(error)
         res.status(500).json({message:'Error al agregar la moneda',error})
     }
     

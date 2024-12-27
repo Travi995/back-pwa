@@ -10,7 +10,6 @@ import {
 import { User } from "./user";
 
 import { Category } from "./category";
-import { typeMoneyEnum } from "../enum/entities";
  
   @Entity()
   export class Transaction extends BaseEntity {
@@ -22,11 +21,6 @@ import { typeMoneyEnum } from "../enum/entities";
   
     @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     date: Date; // Fecha y hora asignada automáticamente por el servidor
-
-
-    @Column('enum',{enum: typeMoneyEnum,nullable:false })
-    currency: typeMoneyEnum;
-
 
   // relations
     @ManyToOne(() => User, (user) => user.transactions)

@@ -71,7 +71,7 @@ export const patchUser = async (req: Request, res: Response) => {
     //validacion para k el usuario de rol user no pueda modificar los datos del rol admin 
     try {
         const { id } = req.params
-        const { name, amount,pass } = req.body
+        const { name,pass } = req.body
 
         const item = parseInt(id)
         if (isNaN(item)) {
@@ -81,10 +81,9 @@ export const patchUser = async (req: Request, res: Response) => {
         //arreglar el update del usuario
         const element = await User.findOneBy({ id: parseInt(id) })
         if (element) {
-            if (name || amount) {
+            if (name || pass) {
                 await User.update(element.id, {
                     name,
-                    amount,
                     password: pass? hashPass(pass):undefined
                     
                 })
