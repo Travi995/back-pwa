@@ -71,7 +71,7 @@ export const patchUser = async (req: Request, res: Response) => {
     //validacion para k el usuario de rol user no pueda modificar los datos del rol admin 
     try {
         const { id } = req.params
-        const { name,pass } = req.body
+        const { name,pass,user } = req.body
 
         const item = parseInt(id)
         if (isNaN(item)) {
@@ -80,24 +80,25 @@ export const patchUser = async (req: Request, res: Response) => {
 
         //arreglar el update del usuario
         const element = await User.findOneBy({ id: parseInt(id) })
+
         if (element) {
-            if (name || pass) {
+
+            if(element.id === parseInt(id) || user.roleUser === rolsEnum.admin){
                 await User.update(element.id, {
-                    name,
-                    password: pass? hashPass(pass):undefined
+                    name:name || element.name,
+                    password: pass? hashPass(pass):element.password
                     
                 })
-                
                 res.status(200).json({ message: `los datos del usuario ${id} han sido actualizados correctamente` })
-            }else{
-                res.status(400).json({ message: 'por favor ajustese al formato de clave valor', example:" las claves son 'name' 'amount' 'pass" })
-            }
 
+            }else{
+                res.status(403).json({message: 'Usted no tiene permiso para realizar esta operacion'})
+                return
+            }
+            
         } else {
             res.status(404).json({ message: `no existe un usuario con el  id ${id}` })
         }
-
-
 
     } catch (error) {
         console.log(error)
@@ -105,7 +106,6 @@ export const patchUser = async (req: Request, res: Response) => {
     }
 
 }
-
 
 export const deleteUser = async (req: Request, res: Response) => {
 
