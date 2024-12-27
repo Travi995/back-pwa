@@ -1,4 +1,4 @@
-import { NextFunction } from "express"
+import { NextFunction, Request, Response } from "express"
 import { Category } from "../entities/category"
 
 export const uniqueCategory = async(req:any,res:any,next:NextFunction) => {
@@ -15,15 +15,15 @@ export const uniqueCategory = async(req:any,res:any,next:NextFunction) => {
 }
 
 
-export const categoryExists = async(req:any,res:any,next:NextFunction) => {
+export const categoryExists = async(req:Request,res:Response,next:NextFunction) => {
     const {category} = req.params
-    const element =  await Category.findOneBy({id:category})
+    // const element =  await Category.findOneBy({id:category})
   
-    if(!element){
+    // if(!element){
        
-        res.status(404).json({mensaje:"No existe una categoria con ese id"})
-        return 
-    }
+    //     res.status(404).json({mensaje:"No existe una categoria con ese id"})
+    //     return 
+    // }
   
     next()
   }

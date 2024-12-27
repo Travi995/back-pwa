@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { ReqExtends } from "../interfaces/generic";
 
 export const validateFields = (req:Request,res:Response,next:NextFunction) => {
 

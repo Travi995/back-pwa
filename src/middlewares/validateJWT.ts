@@ -1,23 +1,29 @@
 import jwt from "jsonwebtoken"
 import "dotenv/config";
-import { NextFunction, Request } from "express";
+import { NextFunction, Request, Response } from "express";
+import { tpPayloadJWT } from "../types/jwt";
 
 
-export const validateJWT = (req: Request, res: any, next: NextFunction) => {
+
+export const validateJWT = (req: Request, res: Response, next: NextFunction) => {
 
     const token = req.headers.token
     if (!token) {
-        return res.status(401).json({ status: 401, message: 'Por favor Envie el Token' })
+        res.status(401).json({ status: 401, message: 'Por favor Envie el Token' })
+        return
     }
     try {
         const key = process.env.SECRETORPUBLICKEY
         
         if (!key) {
-            return res.status(500).json({ status: 401, message: 'No key provided' })
+            res.status(500).json({ status: 401, message: 'No key provided' })
+            return 
         }
-        const decoded = jwt.verify(token as string, key)
+        const decoded:tpPayloadJWT |any = jwt.verify(token as string, key)
+        req.body.user = { id: decoded.id, role: decoded.role };
         next()
     } catch (error) {
-        return res.status(401).json({ status: 401, message: 'Token invalid' })
+        res.status(401).json({ status: 401, message: 'Token invalid' })
+        return 
     }
 }

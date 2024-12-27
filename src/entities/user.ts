@@ -7,6 +7,7 @@ import {
  
 } from "typeorm";
 import { Transaction } from "./transaction";
+import { rolsEnum } from "../enum/rols";
 
 @Entity()
 export class User extends BaseEntity {
@@ -24,6 +25,9 @@ export class User extends BaseEntity {
 
   @Column('text',{select:false})
   password: string;
+
+  @Column('enum',{enum:rolsEnum,nullable:false})
+  roleUser: rolsEnum;
 
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[]; 

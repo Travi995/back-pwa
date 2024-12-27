@@ -1,7 +1,7 @@
-import { NextFunction } from "express"
+import { NextFunction, Request, Response } from "express"
 import { typeMoneyEnum } from "../enum/entities"
 
-export const validateTypeMoney = async(req:any,res:any,next:NextFunction) => {
+export const validateTypeMoney = async(req:Request,res:Response,next:NextFunction) => {
     try {
         const {typeCoin} = req.body
         

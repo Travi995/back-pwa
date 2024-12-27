@@ -1,9 +1,11 @@
 import { Request, Response } from "express"
 import { User } from "../entities/user"
 import { hashPass } from "../helpers/hashPass"
+import { rolsEnum } from "../enum/rols"
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
+        console.log(req.body.user)
         const elements = await User.find()
 
         res.status(200).json({ mensaje: "usuarios listados", data: elements })
@@ -47,13 +49,15 @@ export const createUser = async (req: Request, res: Response) => {
         const newUser = User.create({
             name,
             email,
-            password: hashPass(password)
+            password: hashPass(password),
+            roleUser:rolsEnum.admin
         });
         await newUser.save();
 
         res.status(201).json({ mensaje: "usuario Agregado con Exito" })
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ mensaje: "error" })
     }
 

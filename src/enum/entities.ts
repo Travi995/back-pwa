@@ -6,3 +6,4 @@ export enum typeMoneyEnum {
     EUR = "EUR",
     CUP = "CUP",
 }
+

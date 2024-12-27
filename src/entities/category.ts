@@ -4,7 +4,7 @@ import { Transaction } from "./transaction";
 
 @Entity()
 export class Category extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column('text',{ unique: true,nullable:false })
