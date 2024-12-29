@@ -3,6 +3,7 @@ import { User } from "../entities/user";
 import { Category } from "../entities/category";
 import { Transaction } from "../entities/transaction";
 import { calcAmount } from "../helpers/calcAmount";
+import { convertToNumber } from "../helpers/convertToNumber";
 
 export const createTransaction = async (req:Request,res:Response)=>{
     try {
@@ -43,16 +44,40 @@ export const createTransaction = async (req:Request,res:Response)=>{
 
 
 export const getTransactionsAll = async (req:Request,res:Response)=>{
+    try {
+        const items = await Transaction.find()
+        res.status(200).json({message:'transferencias realizadas',data:items})
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({mensaje:'ha ocurrido un error en el servidor'})
+        
+    }
    
 }
 
+export const getTransactionById = async (req:Request,res:Response)=>{
+    try {
+        const {id} = req.params
+
+       const categoryElement = await Transaction.findOneBy({id:convertToNumber(id)})
+       if(!categoryElement){
+           res.status(404).json({mensaje:`no existe transferencia con id ${id}`})
+           return
+       }
+       res.status(200).json({message:`transferencias por id ${id}`,data:categoryElement})
+       
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({mensaje:'ha ocurrido un error en el servidor'})
+    }
+
+
+}
 export const getTransactionsByCategory = async (req:Request,res:Response)=>{
 
 }
 
-export const getTransactionById = async (req:Request,res:Response)=>{
-
-}
 export const  getTransactionByUser = async (req:Request,res:Response)=>{}
 
 
