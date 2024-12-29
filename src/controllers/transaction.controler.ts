@@ -10,6 +10,7 @@ export const createTransaction = async (req:Request,res:Response)=>{
         const itemUser = await User.findOne({ where: { id: user.id } });
         // const typeMoney = await TypeMoney.findOne({ where: { id: currency } });
         
+        
         const categoryEntity = await Category.findOneBy({ id: category } );
         
 
@@ -28,19 +29,11 @@ export const createTransaction = async (req:Request,res:Response)=>{
             amount,
             typeTransaction,
             user:user.id,
+            category:category
         })
 
         transactionElement.save()
 
-        await User.update(itemUser.id,{
-            transactions:[...itemUser.transactions,transactionElement]
-        })
-        
-        await Category.update(categoryEntity.id,{
-            transactions:[...categoryEntity?.transactions,transactionElement]
-        })
-
-        // await transactionElement.save()
         res.json({status:201,message:'transaccion agregada con exito'})
 
     } catch (error) {

@@ -7,7 +7,10 @@ export const getUsers = async (req: Request, res: Response) => {
 
     try {
         const {} =  req.body
-        const elements = await User.find()
+        const elements = await User.find({relations:{
+            transactions:true,
+            
+        }})
 
         res.status(200).json({ mensaje: "Lista de Usuarios", data: elements })
     } catch (error) {

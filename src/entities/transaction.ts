@@ -13,7 +13,7 @@ import { Category } from "./category";
  
   @Entity()
   export class Transaction extends BaseEntity {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id: number;
   
     @Column("decimal", { precision: 10, scale: 2 }) // Monto con decimales

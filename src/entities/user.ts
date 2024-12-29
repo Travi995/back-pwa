@@ -21,7 +21,7 @@ export class User extends BaseEntity {
   @Column('text',{nullable:true})
   name: string;
 
-  @Column( 'numeric',{ default: 0,nullable:true })
+  @Column( 'numeric',{ default: 0 })
   amount: number;
 
   @Column('enum',{enum: typeMoneyEnum,nullable:true })
