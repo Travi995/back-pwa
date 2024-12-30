@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createTransaction, getTransactionById, getTransactionsAll } from "../../controllers/transaction.controler";
+import { createTransaction, getTransactionById, getTransactionByUser, getTransactionsAll, getTransactionsByCategory } from "../../controllers/transaction.controler";
 import { check } from "express-validator";
 import { validateFields } from "../../middlewares/validateFields";
 import { validateJWT } from "../../middlewares/validateJWT";
@@ -28,5 +28,24 @@ routerTransaction.get('/:id',[
     verifyUser,
     validateFields
 ],getTransactionById)
+
+routerTransaction.get('/category/:id',[
+    validateJWT,
+    verifyUser,
+    validateFields
+],getTransactionsByCategory)
+
+routerTransaction.get('/user/:id,',[
+    validateJWT,
+    verifyUser,
+    validateFields
+],getTransactionByUser)
+
+
+routerTransaction.delete('/:id,',[
+    validateJWT,
+    verifyUser,
+    validateFields
+],getTransactionByUser)
 
 
